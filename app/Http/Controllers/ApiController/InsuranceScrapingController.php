@@ -46,7 +46,6 @@ class InsuranceScrapingController extends Controller
         }else{
             Alert::error('เกิดข้อผิดพลาด','กรุณาลองอีกครั้ง!')->persistent('ปิด');
         }
-
     }
 
 

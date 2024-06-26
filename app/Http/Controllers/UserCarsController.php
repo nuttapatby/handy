@@ -8,6 +8,7 @@ use App\UserCars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
 use Alert;
 
 class UserCarsController extends Controller
@@ -28,7 +29,7 @@ class UserCarsController extends Controller
 
         if($request->hasFile('car_img')) {
             $files = $request->file('car_img');
-            $file = Input::file('car_img')->getClientOriginalName();
+            $file = $request->file('car_img')->getClientOriginalName();
             $filename = pathinfo($file, PATHINFO_FILENAME);
             $path = $filename.'-'.time() . '.' . $files->getClientOriginalExtension();
             $destinationPath = storage_path('/files/user_car_img/');
@@ -47,7 +48,7 @@ class UserCarsController extends Controller
             'model'=>strtolower($request->modelCar),
             'mileage'=>$request->milleage,
             'img_path'=>$file_path_toDB,
-            'token'=>str_random(16)
+            'token'=>str::random(16),
         ]);
 
         try{
@@ -93,7 +94,7 @@ class UserCarsController extends Controller
 
         if($request->hasFile('car_img')) {
             $files = $request->file('car_img');
-            $file = Input::file('car_img')->getClientOriginalName();
+            $file = $request->file('car_img')->getClientOriginalName();
             $filename = pathinfo($file, PATHINFO_FILENAME);
             $path = $filename.'-'.time() . '.' . $files->getClientOriginalExtension();
             $destinationPath = storage_path('/files/user_car_img/');

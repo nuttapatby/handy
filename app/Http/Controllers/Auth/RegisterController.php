@@ -2,51 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\User; // Update the namespace to match your User model location
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str; // Import the Str class for generating random strings
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = '/dashboard';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -56,32 +30,26 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
     protected function create(array $data)
     {
         $request = request();
         $img_path = null;
-        if($request->hasFile('imgupload')) {
+        if ($request->hasFile('imgupload')) {
             $files = $request->file('imgupload');
-            $file = Input::file('imgupload')->getClientOriginalName();
+            $file = $request->file('imgupload')->getClientOriginalName();
             $filename = pathinfo($file, PATHINFO_FILENAME);
             $path = $filename . '-' . time() . '.' . $files->getClientOriginalExtension();
             $destinationPath = storage_path('/imgs/user_avatar/');
             $files->move($destinationPath, $path);
             $img_path = $path;
-        };
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'telephone' => $data['tel'],
+            'telephone' => $data['tel'], // Assuming 'tel' is part of your form data
             'avatar' => $img_path,
-            'token' => str_random(16),
+            'token' => Str::random(16), // Use Str::random() to generate random string
         ]);
     }
 }

@@ -166,9 +166,9 @@
                                 <div class="d-flex flex-row comment-row m-t-0">
                                     <div class="p-2">
                                         @if ($handy->get_user->avatar)
-                                            <img src="{{url('user_img/'.$handy->get_user->avatar)}}" alt="user" width="50" class="rounded-circle">
+                                            <img src="{{url('user_img/'.$handy->get_user->avatar)}}" alt="user" width="50" height="50" class="rounded-circle">
                                             @else
-                                            <img src="{{url('user_img/'.'user.jpg')}}" alt="user" width="50" class="rounded-circle">
+                                            <img src="{{url('user_img/'.'user.jpg')}}" alt="user" width="50" height="50" class="rounded-circle">
                                         @endif
                                     </div>
                                     <div class="comment-text">

@@ -35,13 +35,13 @@ class SearchEngineController extends Controller
 
         if (!$lat || !$lng){
             Alert::error('เกิดข้อผิดพลาดในการระบุตำแหน่ง!', 'กรุณาลองใหม่อีกครั้ง')->persistent('ปิด');
-            return back();
+            return redirect()->back();
         }
 
         $typeArray = [6,1,8,5,15,9,16,17];
         if (!in_array($request->inputType,$typeArray) && $request->inputType){
             Alert::error('ประเภทผิด!', 'กรุณาลองใหม่อีกครั้ง')->persistent('ปิด');
-            return back();
+            return redirect()->back();
         }
         if ($request->inputName){ // มีชื่ออู่
             $nameSearch = $request->inputName;

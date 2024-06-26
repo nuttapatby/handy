@@ -12,8 +12,10 @@ use App\UserCars;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
+// use Illuminate\Support\Facades\Input;
 use Alert;
+// use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -52,16 +54,14 @@ class AdminController extends Controller
             'addBrand' => 'required' ,
             'img_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
-
         $checkExist = Brand::where('name',strtolower($request->addBrand))->first();
         if ($checkExist){
             Alert::error('มียี่ห้อนี้แล้ว','กรุณาลองอีกครั้ง!')->persistent('ปิด');
             return redirect()->back()->withInput();
         }
-
         if($request->hasFile('img_logo')) {
             $files = $request->file('img_logo');
-            $file = Input::file('img_logo')->getClientOriginalName();
+            $file = $request->file('img_logo')->getClientOriginalName();
             $filename = pathinfo($file, PATHINFO_FILENAME);
             $path = $filename.'-'.time() . '.' . $files->getClientOriginalExtension();
             $destinationPath = storage_path('/imgs/logo_Car/');
@@ -69,13 +69,11 @@ class AdminController extends Controller
             $file_path_toDB = $path;
 
         }
-
         $brand = new Brand([
             'name'=>strtolower($request->addBrand),
             'img_logo'=>$file_path_toDB,
-            'token'=>str_random(16)
+            'token'=>str::random(16)
         ]);
-
         try{
             $brand->save();
             Alert::success('บันทึกข้อมูลแล้ว','สำเร็จ!')->autoclose(2000);

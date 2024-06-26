@@ -1,7 +1,6 @@
 @extends('layouts.header')
 @section('title','หน้าแรก')
 @section('content')
-
     <div class="container-fluid" style="margin-bottom: 300px">
         <div class="shadow bg-white rounded">
             <div class="card intable cardColor cardStyleMargin" style="padding-bottom: 100px">
@@ -9,7 +8,6 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-{{--                        <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>--}}
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
@@ -18,9 +16,6 @@
                         <div class="carousel-item">
                             <img class="img-fluid" src="{{asset('images/slide/slide_img2.jpg')}}" alt="Second slide">
                         </div>
-{{--                        <div class="carousel-item">--}}
-{{--                            <img class="img-fluid" src="../../assets/images/big/img5.jpg" alt="Third slide">--}}
-{{--                        </div>--}}
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -79,17 +74,13 @@
             </div>
         </div>
     </div>
-
 @stop
 
 @section('script')
-{{--    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk"></script>--}}
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCfe5aS3YBeRqcAevRwJMzUwO5LCbZ2jk&libraries=places"></script>
     <script>
-
         $(document).ready(function () {
             getLocation();
-
             $('#inputType').on('change',function () {
                 let choose = $('#inputType option:selected').val();
                 if (choose === 'typeInsure'){
@@ -126,7 +117,6 @@
             $('#btnSubmit').append("<i class=\"fas fa-search\"></i>");
             $('#btnSubmit').prop('disabled',false);
         }
-
 
         function showError(error) {
             switch(error.code) {
@@ -173,6 +163,5 @@
             $.blockUI({ message: null});
             return true;
         }
-
     </script>
 @stop

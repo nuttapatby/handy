@@ -84,7 +84,6 @@
         var est;
         var sud;
         var ovest;
-
         var type;
         var insurance;
 

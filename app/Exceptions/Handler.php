@@ -2,19 +2,15 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
         //
@@ -23,44 +19,23 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
 
     /**
-     * Report or log an exception.
+     * Register the exception handling callbacks for the application.
      *
-     * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function register()
     {
-        parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, Exception $exception)
-    {
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return response()->view('guest.500', [], 500);
-        }else if ($exception instanceof NotFoundHttpException || $exception instanceof ModelNotFoundException) {
-            if ($request->ajax()) {
-                return response()->view('guest.404', [], 404);
-            }
-            return response()->view('guest.404', [], 404);
-        }else if ($exception instanceof ValidationException) {
-            return parent::render($request, $exception);
-        }
-        return parent::render($request, $exception);
-//        return view('guest.500');
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 }

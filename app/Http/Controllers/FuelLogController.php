@@ -8,7 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
+// use Illuminate\Support\Facades\Input;
 use Alert;
 
 class FuelLogController extends Controller
@@ -88,7 +89,7 @@ class FuelLogController extends Controller
             'total_liter'=>$request->total_liter,
             'filling_lat'=>$request->user_lat,
             'filling_lng'=>$request->user_lng,
-            'token'=>str_random(16),
+            'token'=>str::random(16),
         ]);
 
         $car->mileage = $request->mileage;
